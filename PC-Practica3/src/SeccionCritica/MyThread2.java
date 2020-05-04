@@ -1,3 +1,5 @@
+/// Autor: Pablo Daurell Marina
+
 package SeccionCritica;
 
 public class MyThread2 extends MyThread{

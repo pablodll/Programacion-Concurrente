@@ -1,0 +1,27 @@
+Programación Concurrente - Práctica 3
+- Pablo Daurell Marina -
+
+La práctica esta dividida en dos paquetes, el paquete SeccionCritica que implementa el primer apartado de la práctica ("Evitar condicion de carrera Practica 2 utilizando semaforos),
+y el paquete ProductorConsumidor donde se implementa el segundo apartado de la práctica ("Productor-consumidor con semáforos").
+
+Cada paquete tiene un main propio y una clase "Shared" donde están las variables compartidas entre los procesos.
+
+
+1.Seccion-Critica:
+- La clase "MyThread" implementa el código para controlar el acceso a la variable compartida usando semaforos.
+- La clase "MyThread1" hereda de "MyThread" y se encarga de incrementar la variable compartida y "MyThread2" igual pero la decrementa.
+
+* REVISAR: Me interesa saber si la implementación de la clase "MyThread" es correcta
+
+
+
+2.Productor-Consumidor:
+- En la parte de ProductorConsumidor se utiliza la clase "Almacen1Producto" para implementar el funcionamiento del problema con un buffer de un elemento y la clase "AlmacenNProductos" para implementar
+el funcionamiento con un buffer de N elementos. Ambas implementan la interfaz "Almacen".
+
+- Las clases Productor y Consumidor implementan el funcionamiento de los hilos productores y consumidores. Al crearse se les asigna un ID único para poder ver las trazas de forma más cómoda.
+Estas clases solo intentan producir y consumir 10 veces para poder ver las trazas más comodamente, lo ideal seria cambiar eso por un while(true) pero no deberia afectar al funcionamiento en si.
+
+- Cada vez que un hilo (Productor o Consumidor) realiza una accion sobre el almacen se muestra por consola para poder ver que ocurre con claridad.
+
+* REVISAR: Me gustaría saber si ambos almacenes ("Almacen1Producto" y "AlmacenNProductos") están bien implementadas

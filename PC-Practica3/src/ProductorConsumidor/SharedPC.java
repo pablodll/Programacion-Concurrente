@@ -1,3 +1,5 @@
+/// Autor: Pablo Daurell Marina
+
 package ProductorConsumidor;
 
 public class SharedPC {

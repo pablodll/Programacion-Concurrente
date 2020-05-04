@@ -1,3 +1,5 @@
+/// Autor: Pablo Daurell Marina
+
 package ProductorConsumidor;
 
 public class MainProdCons {
@@ -12,21 +14,6 @@ public static void main(String[] args) throws InterruptedException{
 		Almacen almacen = new AlmacenNProductos(MAX);
 		
 		SharedPC dato = new SharedPC(almacen);
-		
-		
-//		Thread[] hilos = new Thread[2*N];
-
-//		for(int i = 0; i < N-1; i++) {
-//			hilos[2*i] = new Productor(dato, 2*i);
-//			hilos[2*i+1] = new Consumidor(dato, 2*i+1);
-//		}
-//		for(int i = 0; i < N-1; i++) {
-//			hilos[2*i].start();
-//			hilos[2*i+1].start();
-//		}
-//		for(int i = 0; i < N; i++) {
-//			hilos[i].join();
-//		}
 		
 		Thread[] productores = new Thread[N];
 		Thread[] consumidores = new Thread[M];

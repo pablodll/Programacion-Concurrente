@@ -1,3 +1,5 @@
+/// Autor: Pablo Daurell Marina
+
 package SeccionCritica;
 import java.util.concurrent.Semaphore;
 
