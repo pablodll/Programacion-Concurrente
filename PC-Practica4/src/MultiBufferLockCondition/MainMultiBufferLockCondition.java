@@ -5,7 +5,7 @@ public class MainMultiBufferLockCondition {
 public static void main(String[] args) throws InterruptedException{
 		
 		int N = 1;
-		int M = 1;
+		int M = 2;
 		int MAX = 3;
 		
 		int num = 3;

@@ -21,19 +21,17 @@ public class MonitorMB {
 		cond2 = lock.newCondition();
 	}
 	
-	public synchronized void almacenar(Producto prod[], int ProdId) throws InterruptedException{
-		System.out.println("Consumidor " + ProdId + " ESPERA LOCK");
+	public void almacenar(Producto prod[], int ProdId) throws InterruptedException{
+//		System.out.println("Consumidor " + ProdId + " ESPERA LOCK");
 		lock.lock();
 		
-		System.out.println("Productor " + ProdId + " coge LOCK");
+//		System.out.println("Productor " + ProdId + " coge LOCK");
 		
 		try {
 			while(count == MAX || (MAX - count) < prod.length) {
 				System.out.println("Productor " + ProdId + " ESPERA");
 				cond1.await();
 			}
-			
-			cond2.signal();
 			
 			for(Producto p : prod) {
 				this.buf[rear] = p; this.buf = this.buf;
@@ -43,18 +41,19 @@ public class MonitorMB {
 				count++;
 			}
 			
-			
+			cond2.signal();
 			
 		} finally {
 			lock.unlock();
 		}
 	}
 	
-	public synchronized Producto[] extraer(int num, int ConsId) throws InterruptedException {
-		System.out.println("Consumidor " + ConsId + " ESPERA LOCK");
+	public Producto[] extraer(int num, int ConsId) throws InterruptedException {
+//		System.out.println("Consumidor " + ConsId + " ESPERA LOCK");
+		
 		lock.lock();
 		
-		System.out.println("Consumidor " + ConsId + " coge LOCK");
+//		System.out.println("Consumidor " + ConsId + " coge LOCK");
 		
 		Producto[] ret = new Producto[num];
 		try {
@@ -62,8 +61,6 @@ public class MonitorMB {
 				System.out.println("Consumidor " + ConsId + " ESPERA");
 				cond2.await();
 			}
-			
-			cond1.signal();
 			
 			for(int i = 0; i < num; i++) {
 				ret[i] = this.buf[front];
@@ -74,7 +71,7 @@ public class MonitorMB {
 				count--;
 			}
 			
-			
+			cond1.signal();
 			
 		} finally {
 			lock.unlock();
