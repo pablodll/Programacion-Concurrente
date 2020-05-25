@@ -1,10 +1,10 @@
 package servidor;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -29,7 +29,21 @@ public class MonitorUsuarios {
 		return new ArrayList<Usuario>(users.values());
 	}
 	
-	synchronized void connectUser(Usuario user, ObjectInputStream fin, ObjectOutputStream fout) {
+	synchronized String buscarFichero(String fichero) throws FileNotFoundException {
+		for(Usuario u : users.values()) {
+			for(File f : u.getUserInfo()) {
+				if(f.getName().equals(fichero)) { return u.getUserid(); }
+			}
+		}
+		
+		throw new FileNotFoundException();
+	}
+	
+	synchronized ObjectOutputStream getOutputStream(String id) {
+		return (ObjectOutputStream) users_streams.get(id).get(1);
+	}
+	
+	synchronized void addUserStreams(Usuario user, ObjectInputStream fin, ObjectOutputStream fout) {
 		List<Object> streams = new ArrayList<Object>();
 		streams.add(fin);
 		streams.add(fout);
@@ -37,8 +51,9 @@ public class MonitorUsuarios {
 		users_streams = users_streams;  
 	}
 	
-	synchronized void disconnectUser(String id) {
+	synchronized void removeUserStreams(String id) {
 		users_streams.remove(id);
 		users_streams = users_streams;
 	}
+	
 }

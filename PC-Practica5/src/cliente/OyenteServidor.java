@@ -42,10 +42,14 @@ public class OyenteServidor extends Thread{
 						break;
 						
 					case EMITIR_FICHERO:
+						System.out.println("EMITIENDO FICHERITO WEY");
 						break;
+						
 					case PREPARADO_SERVIDORCLIENTE:
 						break;
+						
 					case CONFIRMACION_CERRAR_CONEXION:
+						System.out.println("Conexion con servidor terminada");
 						break;
 					default:
 						break;

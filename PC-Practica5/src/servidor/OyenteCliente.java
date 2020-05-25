@@ -7,8 +7,12 @@ import java.util.List;
 
 import datos.Usuario;
 import datos.mensajes.Mensaje;
+import datos.mensajes.Mensaje_Conexion;
+import datos.mensajes.Mensaje_Confirmacion_Cerrar_Conexion;
 import datos.mensajes.Mensaje_Confirmacion_Conexion;
 import datos.mensajes.Mensaje_Confirmacion_Lista_Usuarios;
+import datos.mensajes.Mensaje_Emitir_Fichero;
+import datos.mensajes.Mensaje_Pedir_Fichero;
 
 public class OyenteCliente extends Thread{
 
@@ -32,7 +36,8 @@ public class OyenteCliente extends Thread{
 				
 				switch(m.getTipo()) {
 					case CONEXION:
-						server.addUser(new Usuario(m.getOrigen(), socket.getInetAddress()), fin, fout);
+						Usuario user = ((Mensaje_Conexion)m).getUser();
+						server.addUser(user, fin, fout);
 						fout.writeObject(new Mensaje_Confirmacion_Conexion(server.getAddres().getHostName(), m.getOrigen()));
 						break;
 						
@@ -41,12 +46,20 @@ public class OyenteCliente extends Thread{
 						break;
 						
 					case PEDIR_FICHERO:
+						String fichero = ((Mensaje_Pedir_Fichero)m).getFichero();
+						String id = server.buscarFichero(fichero);
+						ObjectOutputStream fout2 = server.getOutputStream(id);
+						fout2.writeObject(new Mensaje_Emitir_Fichero(server.getAddres().getHostName(), id, fichero));
 						break;
 						
 					case PREPARADO_CLIENTE_SEVIDOR:
 						break;
+						
 					case CERRAR_CONEXION:
+						server.removeUser(m.getOrigen());
+						fout.writeObject(new Mensaje_Confirmacion_Cerrar_Conexion(server.getAddres().getHostName(), m.getOrigen()));
 						break;
+						
 					default:
 						break;
 				}

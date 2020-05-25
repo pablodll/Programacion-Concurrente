@@ -1,5 +1,6 @@
 package servidor;
 
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -58,11 +59,20 @@ public class Servidor {
 
 	public void addUser(Usuario user, ObjectInputStream fin, ObjectOutputStream fout) {
 		users.addUser(user);
-		users.connectUser(user, fin, fout);
+		users.addUserStreams(user, fin, fout);
 	}
 	
-	public void disconnectUser(String id) {
-		users.disconnectUser(id);
+	public void removeUser(String id) {
+		users.removeUser(id);
+		users.removeUserStreams(id);
+	}
+	
+	public String buscarFichero(String fichero) throws FileNotFoundException {
+		return users.buscarFichero(fichero);
+	}
+	
+	public ObjectOutputStream getOutputStream(String id) {
+		return users.getOutputStream(id);
 	}
 	
 	public List<Usuario> getUsers() {

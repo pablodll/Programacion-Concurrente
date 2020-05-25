@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario implements Serializable{
+	
 	private String id;
 	private InetAddress ip;
-	private ArrayList<File> info;
+	private List<File> info;
+	
 	
 	public Usuario(String id, InetAddress ip) {
 		this.id = id;
@@ -16,10 +19,14 @@ public class Usuario implements Serializable{
 		this.info = new ArrayList<File>();
 	}
 	
-	public Usuario(String id, InetAddress ip, ArrayList<File> info) {
+	public Usuario(String id, InetAddress ip, List<File> info) {
 		this.id = id;
 		this.ip = ip;
 		this.info = new ArrayList<File>(info);
+	}
+	
+	public void addFile(File f) {
+		info.add(f);
 	}
 	
 	public String getUserid() {
@@ -30,14 +37,14 @@ public class Usuario implements Serializable{
 		return ip;
 	}
 	
-	public ArrayList<File> getUserInfo(){
+	public List<File> getUserInfo(){
 		return info;
 	}
 	
 	public String toString() {
-		String str = "Usuario: " + id + "  IP: " + ip + "\n";
+		String str = id + ": " + ip.getHostAddress() + "\n";
 		for(File f : info) {
-			str.concat("\t -" + f.getName() + "\n");
+			str = str.concat("\t -" + f.getName() + "\n");
 		}
 		return str;
 	}
