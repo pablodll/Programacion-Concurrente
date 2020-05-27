@@ -1,6 +1,5 @@
 package cliente;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -9,6 +8,9 @@ import java.util.List;
 import datos.*;
 import datos.mensajes.Mensaje;
 import datos.mensajes.Mensaje_Confirmacion_Lista_Usuarios;
+import datos.mensajes.Mensaje_Emitir_Fichero;
+import datos.mensajes.Mensaje_Preparado_ClienteServidor;
+import datos.mensajes.Mensaje_Preparado_ServidorCliente;
 
 public class OyenteServidor extends Thread{
 	
@@ -42,10 +44,19 @@ public class OyenteServidor extends Thread{
 						break;
 						
 					case EMITIR_FICHERO:
-						System.out.println("EMITIENDO FICHERITO WEY");
+						int port = 350;
+						String cliente = ((Mensaje_Emitir_Fichero)m).getCliente();
+						String fichero = ((Mensaje_Emitir_Fichero)m).getFichero();
+						
+						(new Emisor(port, fichero)).start();
+						fout.writeObject(new Mensaje_Preparado_ClienteServidor(m.getDestino(), m.getOrigen(), cliente, port));
 						break;
 						
 					case PREPARADO_SERVIDORCLIENTE:
+						String ip = ((Mensaje_Preparado_ServidorCliente)m).getIp();
+						int port_ = ((Mensaje_Preparado_ServidorCliente)m).getPort();
+						
+						(new Receptor(port_, ip)).start();
 						break;
 						
 					case CONFIRMACION_CERRAR_CONEXION:

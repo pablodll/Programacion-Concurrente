@@ -26,7 +26,9 @@ public class Cliente {
 	private Socket socket = null;
 	private ObjectInputStream fin = null;
 	private ObjectOutputStream fout = null;
-	 
+	
+	private boolean connected = false;
+	
 	public Cliente(String nombre, InetAddress ip) {
 		this.nombre = nombre;
 		this.ip = ip;
@@ -75,16 +77,20 @@ public class Cliente {
 	private void menu(String[] opt) {
 		switch(opt[0]) {
 		case "connect":
-			connect(opt);			
+			if(!connected)connect(opt);
+			else System.out.println("Ya existe una conexion");
 			break;
 		case "list":
-			lista();
+			if(connected) lista();
+			else System.out.println("Operacion no disponible");
 			break;
 		case "disconnect":
-			disconnect();
+			if(connected)disconnect();
+			else System.out.println("No existe ninguna conexion");
 			break;
 		case "get":
-			getFichero(opt[1]);
+			if(connected) getFichero(opt[1]);
+			else System.out.println("Operacion no disponible");
 			break;
 			
 		default:
@@ -109,23 +115,27 @@ public class Cliente {
 		}
 		
 		try {
-			fout.writeObject(new Mensaje_Conexion(nombre, socket.getInetAddress().getHostAddress(), user));
+			fout.writeObject(new Mensaje_Conexion(ip.getHostAddress(), socket.getInetAddress().getHostAddress(), user));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		connected = true;
 	}
 	
 	private void disconnect() {
 		try {
-			fout.writeObject(new Mensaje_Cerrar_Conexion(nombre, socket.getInetAddress().getHostAddress()));
+			fout.writeObject(new Mensaje_Cerrar_Conexion(ip.getHostAddress(), socket.getInetAddress().getHostAddress(), nombre));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		connected = false;
 	}
 
 	private void lista() {
 		try {
-			fout.writeObject(new Mensaje_Lista_Usuarios(nombre, socket.getInetAddress().getHostAddress()));
+			fout.writeObject(new Mensaje_Lista_Usuarios(ip.getHostAddress(), socket.getInetAddress().getHostAddress()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -133,7 +143,7 @@ public class Cliente {
 	
 	private void getFichero(String f) {
 		try {
-			fout.writeObject(new Mensaje_Pedir_Fichero(nombre, socket.getInetAddress().getHostAddress(), f));
+			fout.writeObject(new Mensaje_Pedir_Fichero(ip.getHostAddress(), socket.getInetAddress().getHostAddress(), f));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

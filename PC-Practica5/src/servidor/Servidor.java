@@ -28,9 +28,9 @@ public class Servidor {
 		try(ServerSocket serverSocket = new ServerSocket(port)){
 			
 			while(true) {
-				System.out.println("Esperando conexion...");
+//				System.out.println("Esperando conexion...");
 				Socket socket = serverSocket.accept();
-				System.out.println("Socket conectado");
+//				System.out.println("Socket conectado");
 				
 				ObjectOutputStream fout = new ObjectOutputStream(socket.getOutputStream());
 				ObjectInputStream fin = new ObjectInputStream(socket.getInputStream());
@@ -73,6 +73,10 @@ public class Servidor {
 	
 	public ObjectOutputStream getOutputStream(String id) {
 		return users.getOutputStream(id);
+	}
+	
+	public String getUserIP(String id) {
+		return users.getUserIP(id);
 	}
 	
 	public List<Usuario> getUsers() {
