@@ -23,8 +23,8 @@ public class Receptor extends Thread{
 	public void run() {
 		try {
 			
-			socket.getInputStream().transferTo(fileOut);
-			
+			System.out.println("Descargando " + fichero);
+			socket.getInputStream().transferTo(fileOut);		
 			System.out.println("Descarga de " + fichero + " finalizada");
 			
 			socket.close();

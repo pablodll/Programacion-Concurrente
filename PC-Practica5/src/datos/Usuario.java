@@ -44,7 +44,7 @@ public class Usuario implements Serializable{
 	public String toString() {
 		String str = id + ": " + ip.getHostAddress() + "\n";
 		for(File f : info) {
-			str = str.concat("\t -" + f.getName() + "\n");
+			str = str.concat("\t -" + f.getName() + "\t" + f.length() + " B \n");
 		}
 		return str;
 	}

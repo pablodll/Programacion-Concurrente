@@ -52,12 +52,13 @@ public class Cliente {
 	public static void main(String[] args) throws UnknownHostException {
 		if(args.length < 2) return;
 		
+		InetAddress ip = InetAddress.getLocalHost();
+		
 		System.out.println("Cliente - Programacion Concurrente (Practica 5)");
 		
 		Scanner scan = new Scanner(System.in);
 		
 		String nombre = readNombre(scan);
-		InetAddress ip = InetAddress.getLocalHost();
 		
 		System.out.println("Bienvenido, " + nombre);
 		

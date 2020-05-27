@@ -50,6 +50,7 @@ public class Servidor {
 		Servidor s = new Servidor(host, port);
 		
 		System.out.println("Servidor - Programacion Concurrente (Practica 5)");
+		System.out.println("IP: " + host + "    Puerto abierto: " + port);
 		s.startSocket();
 	}
 	
