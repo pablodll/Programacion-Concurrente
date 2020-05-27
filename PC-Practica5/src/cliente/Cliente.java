@@ -52,6 +52,8 @@ public class Cliente {
 	public static void main(String[] args) throws UnknownHostException {
 		if(args.length < 2) return;
 		
+		System.out.println("Cliente - Programacion Concurrente (Practica 5)");
+		
 		Scanner scan = new Scanner(System.in);
 		
 		String nombre = readNombre(scan);
@@ -63,10 +65,11 @@ public class Cliente {
 		int port = Integer.parseInt(args[1]);
 		
 		Cliente c = new Cliente(nombre, ip);
+		
 		c.startSocket(hostname, port);
 		
 		while(true) {
-			System.out.print("Introduzca opcion: ");
+			System.out.print("> ");
 	        String s = scan.nextLine();
 			String[] opt = s.split(" ");
 	
@@ -77,19 +80,26 @@ public class Cliente {
 	private void menu(String[] opt) {
 		switch(opt[0]) {
 		case "connect":
+		case "cnt":
 			if(!connected)connect(opt);
 			else System.out.println("Ya existe una conexion");
 			break;
+			
 		case "list":
+		case "ls":
 			if(connected) lista();
 			else System.out.println("Operacion no disponible");
 			break;
+			
 		case "disconnect":
+		case "dcnt":
 			if(connected)disconnect();
 			else System.out.println("No existe ninguna conexion");
 			break;
-		case "get":
-			if(connected) getFichero(opt[1]);
+			
+		case "download":
+		case "dw":
+			if(connected) downloadFile(opt[1]);
 			else System.out.println("Operacion no disponible");
 			break;
 			
@@ -98,7 +108,10 @@ public class Cliente {
 		}
 	}
 	
-	private void connect(String[] opt) {
+	private void connect(String[] opt) { // Inicia la comunicacion entre el cliente y el servidor
+		
+		// Creamos un Usuario con el nombre de sesion del cliente y los ficheros que va a compartir
+		// Enviamos un Mensaje_Conexion con el Usuario que acabamos de crear
 		Usuario user;
 		
 		if(opt.length > 1) {
@@ -115,7 +128,7 @@ public class Cliente {
 		}
 		
 		try {
-			fout.writeObject(new Mensaje_Conexion(ip.getHostAddress(), socket.getInetAddress().getHostAddress(), user));
+			fout.writeObject(new Mensaje_Conexion(nombre, socket.getInetAddress().getHostAddress(), user));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -123,9 +136,9 @@ public class Cliente {
 		connected = true;
 	}
 	
-	private void disconnect() {
+	private void disconnect() { // Elimina la comunicacion entre el cliente y el servidor
 		try {
-			fout.writeObject(new Mensaje_Cerrar_Conexion(ip.getHostAddress(), socket.getInetAddress().getHostAddress(), nombre));
+			fout.writeObject(new Mensaje_Cerrar_Conexion(nombre, socket.getInetAddress().getHostAddress(), nombre));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -133,17 +146,17 @@ public class Cliente {
 		connected = false;
 	}
 
-	private void lista() {
+	private void lista() { // Pide al servidor la lista de usuarios conectados
 		try {
-			fout.writeObject(new Mensaje_Lista_Usuarios(ip.getHostAddress(), socket.getInetAddress().getHostAddress()));
+			fout.writeObject(new Mensaje_Lista_Usuarios(nombre, socket.getInetAddress().getHostAddress()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void getFichero(String f) {
+	private void downloadFile(String f) { // Hace una peticion al servidor para descargar un fichero perteneciente a otro cliente
 		try {
-			fout.writeObject(new Mensaje_Pedir_Fichero(ip.getHostAddress(), socket.getInetAddress().getHostAddress(), f));
+			fout.writeObject(new Mensaje_Pedir_Fichero(nombre, socket.getInetAddress().getHostAddress(), f));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

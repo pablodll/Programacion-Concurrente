@@ -40,9 +40,11 @@ public class OyenteCliente extends Thread{
 				
 				switch(m.getTipo()) {
 					case CONEXION:
-						Usuario user = ((Mensaje_Conexion)m).getUser();
-						server.addUser(user, fin, fout);
-						fout.writeObject(new Mensaje_Confirmacion_Conexion(server.getAddres().getHostAddress(), m.getOrigen()));
+						Mensaje_Conexion mc = (Mensaje_Conexion)m;
+						server.addUser(mc.getUser(), fin, fout);
+						
+						System.out.println("Conexion establecida con " + mc.getOrigen());
+						fout.writeObject(new Mensaje_Confirmacion_Conexion(server.getAddres().getHostAddress(), mc.getOrigen()));
 						break;
 						
 					case LISTA_USUARIOS:
@@ -50,23 +52,24 @@ public class OyenteCliente extends Thread{
 						break;
 						
 					case PEDIR_FICHERO:
-						String fichero = ((Mensaje_Pedir_Fichero)m).getFichero();
-						String id = server.buscarFichero(fichero);
+						Mensaje_Pedir_Fichero mpf = (Mensaje_Pedir_Fichero)m;
+						String id = server.buscarFichero(mpf.getFichero());
 						ObjectOutputStream fout2 = server.getOutputStream(id);
-						fout2.writeObject(new Mensaje_Emitir_Fichero(server.getAddres().getHostAddress(), server.getUserIP(id), fichero, m.getOrigen()));
+						
+						fout2.writeObject(new Mensaje_Emitir_Fichero(server.getAddres().getHostAddress(), id, mpf.getFichero(), mpf.getOrigen()));
 						break;
 						
 					case PREPARADO_CLIENTE_SEVIDOR:
-						String cliente = ((Mensaje_Preparado_ClienteServidor)m).getCliente();
-						int port = ((Mensaje_Preparado_ClienteServidor)m).getPort();
-						String ip = m.getOrigen();
+						Mensaje_Preparado_ClienteServidor mpcs = (Mensaje_Preparado_ClienteServidor)m;
+						ObjectOutputStream fout1 = server.getOutputStream(mpcs.getCliente());
 						
-						ObjectOutputStream fout1 = server.getOutputStream(cliente);
-						fout1.writeObject(new Mensaje_Preparado_ServidorCliente(server.getAddres().getHostAddress(), server.getUserIP(cliente), ip, port));
+						fout1.writeObject(new Mensaje_Preparado_ServidorCliente(server.getAddres().getHostAddress(), server.getUserIP(mpcs.getCliente()), mpcs.getFichero(), mpcs.getIP(), mpcs.getPort()));
 						break;
 						
 					case CERRAR_CONEXION:
 						server.removeUser(((Mensaje_Cerrar_Conexion)m).getNombre());
+						
+						System.out.println("Conexion finalizada con " + m.getOrigen());
 						fout.writeObject(new Mensaje_Confirmacion_Cerrar_Conexion(server.getAddres().getHostAddress(), m.getOrigen()));
 						break;
 						

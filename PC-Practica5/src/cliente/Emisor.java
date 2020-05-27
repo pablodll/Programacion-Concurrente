@@ -1,38 +1,32 @@
 package cliente;
 
-import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Emisor extends Thread {
 	
-	
-	private int port;
+	private ServerSocket serverSocket;
 	private String fichero;
+	private FileInputStream fileIn;
 	
-	public Emisor(int port, String fichero) {
-		this.port = port;
+	public Emisor(int port, String fichero) throws IOException {
+		this.serverSocket = new ServerSocket(port);
 		this.fichero = fichero;
+		this.fileIn = new FileInputStream(fichero);
 	}
 	
 	@Override
 	public void run() {
-		try(ServerSocket serverSocket = new ServerSocket(port)){
-					
-			System.out.println("Esperando receptor...");
-			Socket socket = serverSocket.accept();
-			System.out.println("Receptor conectado");
+		try(Socket socket = serverSocket.accept()){
 			
-			ObjectOutputStream fout = new ObjectOutputStream(socket.getOutputStream());
+			fileIn.transferTo(socket.getOutputStream());
+			serverSocket.close();
 			
-			// Transmitir fichero
-			System.out.println("TRANSMITIENDO FICHERO");
-			fout.writeObject(fichero);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {
+			System.out.println("Fallo al enviar el archivo " + fichero);
+		} 
 	}
-	
 	
 }

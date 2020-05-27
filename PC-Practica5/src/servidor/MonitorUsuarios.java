@@ -44,10 +44,6 @@ public class MonitorUsuarios {
 	}
 	
 	synchronized ObjectOutputStream getOutputStream(String id) {
-		System.out.println(id);
-		System.out.println(users_streams.get(id));
-		System.out.println(users_streams.get(id).get(0));
-		System.out.println(users_streams.get(id).get(1));
 		return (ObjectOutputStream) users_streams.get(id).get(1);
 	}
 	

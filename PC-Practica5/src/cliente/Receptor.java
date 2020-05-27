@@ -1,34 +1,36 @@
 package cliente;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Receptor extends Thread{
 
-	private int port;
-	private String ip;
+
+	private String fichero;
+	private Socket socket;
+	private FileOutputStream fileOut;
 	
-	public Receptor(int port, String ip) {
-		this.port = port;
-		this.ip = ip;
+	public Receptor(int port, String ip, String fichero) throws UnknownHostException, IOException {
+		this.socket = new Socket(ip, port);
+		fileOut = new FileOutputStream(fichero);
+		this.fichero = fichero;
 	}
 	
 	@Override
 	public void run() {
 		try {
 			
-			Socket socket = new Socket(ip, port);
+			socket.getInputStream().transferTo(fileOut);
 			
-			ObjectInputStream fin = new ObjectInputStream(socket.getInputStream());
+			System.out.println("Descarga de " + fichero + " finalizada");
 			
-			// LEER INFO
-			System.out.println("RECIBIENDO FICHERO");
-			String fichero = (String) fin.readObject();
+			socket.close();
 			
-			System.out.println("Fichero recibido: " + fichero);
-			
-		} catch (Exception e) {
+		} catch (IOException e) {
+			System.err.println("Fallo al descargar " + fichero);
 			e.printStackTrace();
 		}
 	}

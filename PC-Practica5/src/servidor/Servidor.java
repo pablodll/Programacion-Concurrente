@@ -28,9 +28,8 @@ public class Servidor {
 		try(ServerSocket serverSocket = new ServerSocket(port)){
 			
 			while(true) {
-//				System.out.println("Esperando conexion...");
 				Socket socket = serverSocket.accept();
-//				System.out.println("Socket conectado");
+				System.out.println("Canal establecido con " + socket.getLocalAddress());
 				
 				ObjectOutputStream fout = new ObjectOutputStream(socket.getOutputStream());
 				ObjectInputStream fin = new ObjectInputStream(socket.getInputStream());
@@ -50,6 +49,7 @@ public class Servidor {
 		
 		Servidor s = new Servidor(host, port);
 		
+		System.out.println("Servidor - Programacion Concurrente (Practica 5)");
 		s.startSocket();
 	}
 	

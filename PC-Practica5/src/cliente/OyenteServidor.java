@@ -44,24 +44,23 @@ public class OyenteServidor extends Thread{
 						break;
 						
 					case EMITIR_FICHERO:
+						Mensaje_Emitir_Fichero mef = (Mensaje_Emitir_Fichero)m;
 						int port = 350;
-						String cliente = ((Mensaje_Emitir_Fichero)m).getCliente();
-						String fichero = ((Mensaje_Emitir_Fichero)m).getFichero();
 						
-						(new Emisor(port, fichero)).start();
-						fout.writeObject(new Mensaje_Preparado_ClienteServidor(m.getDestino(), m.getOrigen(), cliente, port));
+						(new Emisor(port, mef.getFichero())).start();
+						fout.writeObject(new Mensaje_Preparado_ClienteServidor(m.getDestino(), m.getOrigen(), mef.getCliente(), mef.getFichero(), port, socket.getRemoteSocketAddress().toString()));
 						break;
 						
 					case PREPARADO_SERVIDORCLIENTE:
-						String ip = ((Mensaje_Preparado_ServidorCliente)m).getIp();
-						int port_ = ((Mensaje_Preparado_ServidorCliente)m).getPort();
+						Mensaje_Preparado_ServidorCliente mpsc = (Mensaje_Preparado_ServidorCliente)m;
 						
-						(new Receptor(port_, ip)).start();
+						(new Receptor(mpsc.getPort(), mpsc.getIp(), mpsc.getFichero())).start();
 						break;
 						
 					case CONFIRMACION_CERRAR_CONEXION:
 						System.out.println("Conexion con servidor terminada");
 						break;
+						
 					default:
 						break;
 				}
