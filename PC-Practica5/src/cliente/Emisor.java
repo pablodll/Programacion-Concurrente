@@ -1,6 +1,12 @@
+/*
+ * Pratica 5 - Programacion Concurrente
+ * Autor: Pablo Daurel Marina
+ */
+
 package cliente;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,10 +17,14 @@ public class Emisor extends Thread {
 	private String fichero;
 	private FileInputStream fileIn;
 	
-	public Emisor(int port, String fichero) throws IOException {
-		this.serverSocket = new ServerSocket(port);
+	public Emisor(String fichero) throws IOException, FileNotFoundException {
+		this.serverSocket = new ServerSocket(0);
 		this.fichero = fichero;
 		this.fileIn = new FileInputStream(fichero);
+	}
+	
+	public int getPort() {
+		return serverSocket.getLocalPort();
 	}
 	
 	@Override

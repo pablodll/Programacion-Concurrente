@@ -1,3 +1,8 @@
+/*
+ * Pratica 5 - Programacion Concurrente
+ * Autor: Pablo Daurel Marina
+ */
+
 package datos;
 
 import java.io.File;
@@ -44,7 +49,7 @@ public class Usuario implements Serializable{
 	public String toString() {
 		String str = id + ": " + ip.getHostAddress() + "\n";
 		for(File f : info) {
-			str = str.concat("\t -" + f.getName() + "\t" + f.length() + " B \n");
+			str = str.concat("\t -" + f.getName() + "\n");
 		}
 		return str;
 	}

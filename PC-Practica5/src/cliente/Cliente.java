@@ -1,3 +1,8 @@
+/*
+ * Pratica 5 - Programacion Concurrente
+ * Autor: Pablo Daurel Marina
+ */
+
 package cliente;
 
 import java.io.File;
@@ -67,6 +72,14 @@ public class Cliente {
 		
 		Cliente c = new Cliente(nombre, ip);
 		
+		// Si la aplicacion se cierra el cliente notifica su desconexion al servidor
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				c.disconnect();
+			}
+		});
+		
 		c.startSocket(hostname, port);
 		
 		while(true) {
@@ -76,6 +89,8 @@ public class Cliente {
 	
 			c.menu(opt);
 		}
+
+		
 	}
 	
 	private void menu(String[] opt) {

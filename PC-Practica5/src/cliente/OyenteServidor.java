@@ -1,5 +1,11 @@
+/*
+ * Pratica 5 - Programacion Concurrente
+ * Autor: Pablo Daurel Marina
+ */
+
 package cliente;
 
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -37,7 +43,7 @@ public class OyenteServidor extends Thread{
 						
 					case CONFIRMACION_LISTA_USUARIOS:
 						List<Usuario> listaUsuarios = ((Mensaje_Confirmacion_Lista_Usuarios) m).getListaUsuarios();
-						System.out.println("USUARIOS");
+						System.out.println("\nUSUARIOS CONECTADOS:");
 						for(Usuario u : listaUsuarios) {
 							System.out.println(u);
 						}
@@ -45,10 +51,15 @@ public class OyenteServidor extends Thread{
 						
 					case EMITIR_FICHERO:
 						Mensaje_Emitir_Fichero mef = (Mensaje_Emitir_Fichero)m;
-						int port = 350;
 						
-						(new Emisor(port, mef.getFichero())).start();
-						fout.writeObject(new Mensaje_Preparado_ClienteServidor(m.getDestino(), m.getOrigen(), mef.getCliente(), mef.getFichero(), port, socket.getRemoteSocketAddress().toString()));
+						try {
+							Emisor e = new Emisor(mef.getFichero());
+							e.start();
+							fout.writeObject(new Mensaje_Preparado_ClienteServidor(m.getDestino(), m.getOrigen(), mef.getCliente(), mef.getFichero(), e.getPort(), socket.getRemoteSocketAddress().toString()));
+						
+						} catch (FileNotFoundException e) {
+							System.err.println("Fichero " + mef.getFichero() + " no encontrado");
+						}
 						break;
 						
 					case PREPARADO_SERVIDORCLIENTE:

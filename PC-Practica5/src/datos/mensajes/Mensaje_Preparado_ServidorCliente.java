@@ -1,3 +1,8 @@
+/*
+ * Pratica 5 - Programacion Concurrente
+ * Autor: Pablo Daurel Marina
+ */
+
 package datos.mensajes;
 
 public class Mensaje_Preparado_ServidorCliente extends Mensaje {
