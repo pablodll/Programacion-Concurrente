@@ -15,10 +15,12 @@ import java.util.List;
 
 import datos.Usuario;
 
+/*
+ *  Monitor encargado de gestionar la tabla con la informacion de los usuarios conectados al server 
+ */
 public class MonitorUsuarios {
 	
 	volatile private Hashtable<String, Usuario> users = new Hashtable<String, Usuario>();
-	volatile private Hashtable<String, List<Object>> users_streams = new Hashtable<String, List<Object>>();
 	
 	synchronized void addUser(Usuario user) {
 		users.put(user.getUserid(), user);
@@ -46,23 +48,6 @@ public class MonitorUsuarios {
 		}
 		
 		throw new FileNotFoundException();
-	}
-	
-	synchronized ObjectOutputStream getOutputStream(String id) {
-		return (ObjectOutputStream) users_streams.get(id).get(1);
-	}
-	
-	synchronized void addUserStreams(Usuario user, ObjectInputStream fin, ObjectOutputStream fout) {
-		List<Object> streams = new ArrayList<Object>();
-		streams.add(fin);
-		streams.add(fout);
-		users_streams.put(user.getUserid(), streams);
-		users_streams = users_streams;  
-	}
-	
-	synchronized void removeUserStreams(String id) {
-		users_streams.remove(id);
-		users_streams = users_streams;
 	}
 	
 }

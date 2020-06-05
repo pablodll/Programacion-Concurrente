@@ -22,11 +22,13 @@ public class Servidor {
 	private int port;
 	
 	private MonitorUsuarios users;
+	private MonitorStreams users_streams;
 	
 	public Servidor(InetAddress host, int port) {
 		this.host = host;
 		this.port = port;
 		this.users = new MonitorUsuarios();
+		this.users_streams = new MonitorStreams();
 	}
 	
 	private void startSocket() {
@@ -65,12 +67,12 @@ public class Servidor {
 
 	public void addUser(Usuario user, ObjectInputStream fin, ObjectOutputStream fout) {
 		users.addUser(user);
-		users.addUserStreams(user, fin, fout);
+		users_streams.addUserStreams(user, fin, fout);
 	}
 	
 	public void removeUser(String id) {
 		users.removeUser(id);
-		users.removeUserStreams(id);
+		users_streams.removeUserStreams(id);
 	}
 	
 	public String buscarFichero(String fichero) throws FileNotFoundException {
@@ -78,7 +80,7 @@ public class Servidor {
 	}
 	
 	public ObjectOutputStream getOutputStream(String id) {
-		return users.getOutputStream(id);
+		return users_streams.getOutputStream(id);
 	}
 	
 	public String getUserIP(String id) {
