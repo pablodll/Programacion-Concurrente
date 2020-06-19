@@ -4,11 +4,11 @@
 
 package MultiBufferLockCondition;
 
-public class Producto {
+public class ProductoMBLC {
 	
 	public int id;
 	
-	public Producto(int id) {
+	public ProductoMBLC(int id) {
 		this.id = id;
 	}
 	

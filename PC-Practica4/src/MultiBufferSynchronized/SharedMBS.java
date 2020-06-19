@@ -2,9 +2,9 @@
  * Autor: Pablo Daurel Marina
  */
 
-package MultiBufferLockCondition;
+package MultiBufferSynchronized;
 
-public class SharedMB {
+public class SharedMBS {
 	
 	public int prodId = 0;
 	

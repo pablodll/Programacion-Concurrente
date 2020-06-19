@@ -4,15 +4,15 @@
 
 package MultiBufferLockCondition;
 
-public class Consumidor extends Thread{
+public class ConsumidorMBLC extends Thread{
 	
-	private SharedMB dato;
-	private MonitorMB m;
+	private SharedMBLC dato;
+	private MonitorMBLC m;
 	private int num;
 	
 	public int id;
 	
-	public Consumidor(int num, MonitorMB m, SharedMB dato, int id) {
+	public ConsumidorMBLC(int num, MonitorMBLC m, SharedMBLC dato, int id) {
 		this.dato = dato;
 		this.m = m;
 		this.num = num;
@@ -27,7 +27,7 @@ public class Consumidor extends Thread{
 				
 			try {
 				@SuppressWarnings("unused")
-				Producto[] prod = m.extraer(this.num, this.id);
+				ProductoMBLC[] prod = m.extraer(this.num, this.id);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

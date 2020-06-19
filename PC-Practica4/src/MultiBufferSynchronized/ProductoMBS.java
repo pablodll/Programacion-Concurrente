@@ -4,11 +4,11 @@
 
 package MultiBufferSynchronized;
 
-public class Producto {
+public class ProductoMBS {
 	
 	public int id;
 	
-	public Producto(int id) {
+	public ProductoMBS(int id) {
 		this.id = id;
 	}
 	

@@ -4,15 +4,15 @@
 
 package MultiBufferLockCondition;
 
-public class Productor extends Thread{
+public class ProductorMBLC extends Thread{
 	
-	private SharedMB dato;
-	private MonitorMB m;
+	private SharedMBLC dato;
+	private MonitorMBLC m;
 	private int num;
 	
 	public int id;
 	
-	public Productor(int num, MonitorMB m, SharedMB dato, int id) {
+	public ProductorMBLC(int num, MonitorMBLC m, SharedMBLC dato, int id) {
 		this.dato = dato;
 		this.m = m;
 		this.num = num;
@@ -24,9 +24,9 @@ public class Productor extends Thread{
 		int i = 0;
 		
 		while(i < 10) {
-			Producto[] prod = new Producto[num];
+			ProductoMBLC[] prod = new ProductoMBLC[num];
 			for(int p = 0; p < num; p++) {
-				prod[p] = new Producto(dato.prodId++);	
+				prod[p] = new ProductoMBLC(dato.prodId++);	
 			}
 			
 			try {

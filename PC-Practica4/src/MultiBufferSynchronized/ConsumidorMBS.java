@@ -4,15 +4,15 @@
 
 package MultiBufferSynchronized;
 
-public class Consumidor extends Thread{
+public class ConsumidorMBS extends Thread{
 	
-	private SharedMB dato;
-	private MonitorMB m;
+	private SharedMBS dato;
+	private MonitorMBS m;
 	private int num;
 	
 	public int id;
 	
-	public Consumidor(int num, MonitorMB m, SharedMB dato, int id) {
+	public ConsumidorMBS(int num, MonitorMBS m, SharedMBS dato, int id) {
 		this.dato = dato;
 		this.m = m;
 		this.num = num;
@@ -26,7 +26,7 @@ public class Consumidor extends Thread{
 		while(i < 10) {
 				
 			@SuppressWarnings("unused")
-			Producto[] prod = m.extraer(this.num, this.id);
+			ProductoMBS[] prod = m.extraer(this.num, this.id);
 		
 //			i++;
 		}

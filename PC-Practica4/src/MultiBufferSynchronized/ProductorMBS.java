@@ -4,15 +4,15 @@
 
 package MultiBufferSynchronized;
 
-public class Productor extends Thread{
+public class ProductorMBS extends Thread{
 	
-	private SharedMB dato;
-	private MonitorMB m;
+	private SharedMBS dato;
+	private MonitorMBS m;
 	private int num;
 	
 	public int id;
 	
-	public Productor(int num, MonitorMB m, SharedMB dato, int id) {
+	public ProductorMBS(int num, MonitorMBS m, SharedMBS dato, int id) {
 		this.dato = dato;
 		this.m = m;
 		this.num = num;
@@ -24,9 +24,9 @@ public class Productor extends Thread{
 		int i = 0;
 		
 		while(i < 10) {
-			Producto[] prod = new Producto[num];
+			ProductoMBS[] prod = new ProductoMBS[num];
 			for(int p = 0; p < num; p++) {
-				prod[p] = new Producto(dato.prodId++);	
+				prod[p] = new ProductoMBS(dato.prodId++);	
 			}
 			
 			m.almacenar(prod, this.id);

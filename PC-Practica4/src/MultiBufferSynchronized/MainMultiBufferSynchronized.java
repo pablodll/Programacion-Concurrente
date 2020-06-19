@@ -4,31 +4,34 @@
 
 package MultiBufferSynchronized;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class MainMultiBufferSynchronized {
 	
 public static void main(String[] args) throws InterruptedException{
 		
 		int N = 5;
 		int M = 10;
-		int MAX = 6;
+		int MAX = 10;
 		
-		int num = 3;
+		int min = 1;
+		int max = 5;
 		
-		MonitorMB m = new MonitorMB(MAX);
-		
-		SharedMB dato = new SharedMB();
-		
+		MonitorMBS m = new MonitorMBS(MAX);
+		SharedMBS dato = new SharedMBS();
 		
 		Thread[] productores = new Thread[N];
 		Thread[] consumidores = new Thread[M];
 		
 		
 		for(int i = 0; i < N; i++) {
-			productores[i] = new Productor(num, m, dato, i);
+			int num = ThreadLocalRandom.current().nextInt(min, max + 1);
+			productores[i] = new ProductorMBS(num, m, dato, i);
 			productores[i].start();
 		}
 		for(int i = 0; i < M; i++) {
-			consumidores[i] = new Consumidor(num, m, dato, i);
+			int num = ThreadLocalRandom.current().nextInt(min, max + 1);
+			consumidores[i] = new ConsumidorMBS(num, m, dato, i);
 			consumidores[i].start();
 		}
 		
