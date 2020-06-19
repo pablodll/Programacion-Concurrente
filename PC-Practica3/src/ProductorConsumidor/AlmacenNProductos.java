@@ -1,3 +1,7 @@
+/*
+ * Autores: Alberto García Doménech y Pablo Daurel Marina
+ */
+
 package ProductorConsumidor;
 
 import java.util.concurrent.Semaphore;

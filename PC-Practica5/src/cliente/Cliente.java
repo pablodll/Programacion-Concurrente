@@ -1,5 +1,4 @@
 /*
- * Pratica 5 - Programacion Concurrente
  * Autor: Pablo Daurel Marina
  */
 

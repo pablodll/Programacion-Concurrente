@@ -1,3 +1,7 @@
+/*
+ * Autor: Pablo Daurel Marina
+ */
+
 package SeccionCritica;
 
 public class MyThread1 extends Thread{
@@ -10,6 +14,8 @@ public class MyThread1 extends Thread{
 
 	@Override
 	public void run() {
-		m.inc();
+		for(int i = 0; i < 100; i++) {
+			m.inc();
+		}
 	}
 }

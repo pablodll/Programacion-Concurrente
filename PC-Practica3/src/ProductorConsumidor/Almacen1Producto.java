@@ -1,4 +1,6 @@
-/// Autor: Pablo Daurell Marina
+/*
+ * Autores: Alberto García Doménech y Pablo Daurel Marina
+ */
 
 package ProductorConsumidor;
 

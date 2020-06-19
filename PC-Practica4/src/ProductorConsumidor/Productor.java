@@ -1,3 +1,7 @@
+/*
+ * Autor: Pablo Daurel Marina
+ */
+
 package ProductorConsumidor;
 
 public class Productor extends Thread{

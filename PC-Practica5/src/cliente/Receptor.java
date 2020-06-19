@@ -1,12 +1,10 @@
 /*
- * Pratica 5 - Programacion Concurrente
  * Autor: Pablo Daurel Marina
  */
 
 package cliente;
 
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;

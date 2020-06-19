@@ -1,3 +1,7 @@
+/*
+ * Autor: Pablo Daurel Marina
+ */
+
 package MultiBufferSynchronized;
 
 public class MainMultiBufferSynchronized {

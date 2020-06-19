@@ -1,3 +1,7 @@
+/*
+ * Autor: Pablo Daurel Marina
+ */
+
 package servidor;
 
 import java.io.ObjectInputStream;
@@ -16,11 +20,6 @@ public class MonitorStreams {
 	
 	volatile private Hashtable<String, List<Object>> users_streams = new Hashtable<String, List<Object>>();
 	
-	
-	synchronized ObjectOutputStream getOutputStream(String id) {
-		return (ObjectOutputStream) users_streams.get(id).get(1);
-	}
-	
 	synchronized void addUserStreams(Usuario user, ObjectInputStream fin, ObjectOutputStream fout) {
 		List<Object> streams = new ArrayList<Object>();
 		streams.add(fin);
@@ -32,6 +31,10 @@ public class MonitorStreams {
 	synchronized void removeUserStreams(String id) {
 		users_streams.remove(id);
 		users_streams = users_streams;
+	}
+	
+	synchronized ObjectOutputStream getOutputStream(String id) {
+		return (ObjectOutputStream) users_streams.get(id).get(1);
 	}
 	
 }

@@ -1,3 +1,7 @@
+/*
+ * Autores: Alberto García Doménech y Pablo Daurel Marina
+ */
+
 package PC2;
 
 public class LockRompeEmpate implements Lock{

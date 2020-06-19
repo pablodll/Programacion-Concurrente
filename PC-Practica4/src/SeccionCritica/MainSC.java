@@ -1,3 +1,7 @@
+/*
+ * Autor: Pablo Daurel Marina
+ */
+
 package SeccionCritica;
 
 public class MainSC {
@@ -5,18 +9,21 @@ public class MainSC {
 		
 		int N = 10;
 		MonitorSC m = new MonitorSC();
-		Thread[] hilos = new Thread[2*N];
-
-		for(int i = 0; i < N-1; i++) {
-			hilos[2*i] = new MyThread1(m, 2*i);
-			hilos[2*i+1] = new MyThread2(m, 2*i+1);
-		}
-		for(int i = 0; i < N-1; i++) {
-			hilos[2*i].start();
-			hilos[2*i+1].start();
+		
+		Thread[] hilos1 = new Thread[N];
+		Thread[] hilos2 = new Thread[N];
+		
+		for(int i = 0; i < N; i++) {
+			hilos1[i] = new MyThread1(m, 2*i);
+			hilos2[i] = new MyThread2(m, 2*i+1);
 		}
 		for(int i = 0; i < N; i++) {
-			hilos[i].join();
+			hilos1[i].start();
+			hilos2[i].start();
+		}
+		for(int i = 0; i < N; i++) {
+			hilos1[i].join();
+			hilos2[i].join();
 		}
 		
 		System.out.println(m.getN());

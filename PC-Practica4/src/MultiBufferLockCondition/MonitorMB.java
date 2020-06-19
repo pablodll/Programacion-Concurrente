@@ -1,3 +1,7 @@
+/*
+ * Autor: Pablo Daurel Marina
+ */
+
 package MultiBufferLockCondition;
 
 import java.util.concurrent.locks.*;

@@ -1,5 +1,4 @@
 /*
- * Pratica 5 - Programacion Concurrente
  * Autor: Pablo Daurel Marina
  */
 
@@ -7,11 +6,7 @@ package servidor;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.util.List;
-
-import datos.Usuario;
 import datos.mensajes.Mensaje;
 import datos.mensajes.Mensaje_Cerrar_Conexion;
 import datos.mensajes.Mensaje_Conexion;

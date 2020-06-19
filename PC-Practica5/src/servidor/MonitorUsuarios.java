@@ -1,5 +1,4 @@
 /*
- * Pratica 5 - Programacion Concurrente
  * Autor: Pablo Daurel Marina
  */
 
@@ -7,8 +6,6 @@ package servidor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;

@@ -1,3 +1,7 @@
+/*
+ * Autor: Pablo Daurel Marina
+ */
+
 package MultiBufferLockCondition;
 
 public class Producto {
